@@ -97,25 +97,31 @@ gr_e <-
     scale_colour_manual(values = c("random" = "darkgrey",
                                    "co-expressed" = "steelblue",
                                    "expressed" = "lightblue")) +
-    geom_dl(aes(label = gene), method = "last.points") +
-    theme_bw()
+    geom_dl(aes(label = gene, size = 5), method = list("last.points", cex = 2)) +
+    theme_bw() + 
+    labs(title = "(a)") +
+    theme(plot.title = element_text(size = 16)) 
 
 ## plot
 
-
-
-plot_graph(g_euc)
-gr_euc <- grab_grob()
-plot_graph(g_scaled_euc)
-gr_scaled_euc <- grab_grob()
-plot_graph(g_cor)
-gr_cor <- grab_grob()
-heatmap(as.matrix(e_cor), scale = "none")
-gr_h_cor <- grab_grob()
 heatmap(as.matrix(e_euc), scale = "none")
+text(-1.2, 1.2, "(b)", cex = 1.5)
 gr_h_euc <- grab_grob()
+plot_graph(g_euc)
+text(-1, 1, "(c)", cex = 1.5)
+gr_euc <- grab_grob()
 heatmap(as.matrix(e_scaled_euc), scale = "none")
+text(-1.2, 1.2, "(d)", cex = 1.5)
 gr_h_scaled_euc <- grab_grob()
+plot_graph(g_scaled_euc)
+text(-1, 1, "(e)", cex = 1.5)
+gr_scaled_euc <- grab_grob()
+heatmap(as.matrix(e_cor), scale = "none")
+text(-1.2, 1.2, "(f)", cex = 1.5)
+gr_h_cor <- grab_grob()
+plot_graph(g_cor)
+text(-1.2, 1.3, "(g)", cex = 1.5)
+gr_cor <- grab_grob()
 
 
 lm <- matrix(c(1, 1:7), ncol = 2, byrow = TRUE)
