@@ -43,13 +43,13 @@ make_graph <- function(x, w = NULL) {
     V(g)$color <- c(rep("lightgrey", nrow(x) - 3),
                     "steelblue",
                     "steelblue",
-                    "lightblue")
+                    "chartreuse4")
     g
 }
 
 plot_graph <- function(g, main = "") {
     w  <- E(g)$weight / max(E(g)$weight)
-    w <- (1 - w) * 5
+    w <- (1 - w) * 10
     plot(g, main = main,
          edge.width = w,
          edge.label = rep("", 10),
@@ -63,10 +63,10 @@ e <- make_data(n_genes = 2)
 e_euc <- euc(e)
 g_euc <- make_graph(e_euc)
 e_scaled_euc <- euc(t(scale(t(e))))
-e_scaled_euc[8] <- 0.25 ## to avoid overlapping nodes
+e_scaled_euc[8] <- 0.55 ## to avoid overlapping nodes
 g_scaled_euc <- make_graph(e_scaled_euc)
 e_cor <- cor.dist(e)
-e_cor[8] <- 0.08 ## to avoid overlapping nodes
+e_cor[8] <- 0.15 ## to avoid overlapping nodes
 g_cor <- make_graph(e_cor)
 
 
@@ -84,8 +84,8 @@ g_cor <- make_graph(e_cor)
 ## g_100_scaled_euc <- make_graph(euc(e2))
 
 
-edf <- data.frame(expression = as.numeric(e),
-                  sample = rep(1:5, each = 5),
+edf <- data.frame(Expression = as.numeric(e),
+                  Sample = rep(1:5, each = 5),
                   gene = rep(1:5, 5),
                   type = rep(c("random", "random",
                                "co-expressed", "co-expressed",
@@ -97,15 +97,15 @@ edf <- data.frame(expression = as.numeric(e),
 ##                 "steelblue", "lightblue"))
 
 gr_e <-
-    ggplot(edf, aes(x = sample, y = expression, group = gene, colour = type)) +
+    ggplot(edf, aes(x = Sample, y = Expression, group = gene, colour = type)) +
     geom_line(lwd = 1) +
     scale_colour_manual(values = c("random" = "darkgrey",
                                    "co-expressed" = "steelblue",
-                                   "expressed" = "lightblue")) +
+                                   "expressed" = "chartreuse4")) +
     geom_dl(aes(label = gene, size = 5), method = list("last.points", cex = 2)) +
-    theme_bw() + 
+    theme_bw() +
     labs(title = "(a)") +
-    theme(plot.title = element_text(size = 16)) 
+    theme(plot.title = element_text(size = 16))
 
 
 ## save figures separately
@@ -129,32 +129,32 @@ ggsave("subfig-g.pdf", plot_graph(g_cor))
 
 ## compose plots (original file)
 
-## heatmap(as.matrix(e_euc), scale = "none")
-## text(-1.2, 1.2, "(b)", cex = 1.5)
-## gr_h_euc <- grab_grob()
-## plot_graph(g_euc)
-## text(-1, 1, "(c)", cex = 1.5)
-## gr_euc <- grab_grob()
-## heatmap(as.matrix(e_scaled_euc), scale = "none")
-## text(-1.2, 1.2, "(d)", cex = 1.5)
-## gr_h_scaled_euc <- grab_grob()
-## plot_graph(g_scaled_euc)
-## text(-1, 1, "(e)", cex = 1.5)
-## gr_scaled_euc <- grab_grob()
-## heatmap(as.matrix(e_cor), scale = "none")
-## text(-1.2, 1.2, "(f)", cex = 1.5)
-## gr_h_cor <- grab_grob()
-## plot_graph(g_cor)
-## text(-1.2, 1.3, "(g)", cex = 1.5)
-## gr_cor <- grab_grob()
+heatmap(as.matrix(e_euc), scale = "none")
+text(-1.2, 1.2, "(b)", cex = 1.5)
+gr_h_euc <- grab_grob()
+plot_graph(g_euc)
+text(-1, 1, "(c)", cex = 1.5)
+gr_euc <- grab_grob()
+heatmap(as.matrix(e_scaled_euc), scale = "none")
+text(-1.2, 1.2, "(d)", cex = 1.5)
+gr_h_scaled_euc <- grab_grob()
+plot_graph(g_scaled_euc)
+text(-1, 1, "(e)", cex = 1.5)
+gr_scaled_euc <- grab_grob()
+heatmap(as.matrix(e_cor), scale = "none")
+text(-1.2, 1.2, "(f)", cex = 1.5)
+gr_h_cor <- grab_grob()
+plot_graph(g_cor)
+text(-1.2, 1.3, "(g)", cex = 1.5)
+gr_cor <- grab_grob()
 
 
-## lm <- matrix(c(1, 1:7), ncol = 2, byrow = TRUE)
+lm <- matrix(c(1, 1:7), ncol = 2, byrow = TRUE)
 
-## pdf("scaling.pdf", width = 7, height = 14)
-## grid.arrange(gr_e,
-##              gr_h_euc, gr_euc,
-##              gr_h_scaled_euc, gr_scaled_euc,
-##              gr_h_cor, gr_cor,
-##              layout_matrix = lm)
-## dev.off()
+pdf("scaling.pdf", width = 8, height = 14)
+grid.arrange(gr_e,
+             gr_h_euc, gr_euc,
+             gr_h_scaled_euc, gr_scaled_euc,
+             gr_h_cor, gr_cor,
+             layout_matrix = lm)
+dev.off()
