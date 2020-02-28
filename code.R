@@ -104,7 +104,7 @@ gr_e <-
                                    "expressed" = "chartreuse4")) +
     geom_dl(aes(label = gene, size = 5), method = list("last.points", cex = 2)) +
     theme_bw() +
-    labs(title = "(a)") +
+    labs(title = "a") +
     theme(plot.title = element_text(size = 16))
 
 
@@ -130,22 +130,22 @@ ggsave("subfig-g.pdf", plot_graph(g_cor))
 ## compose plots (original file)
 
 heatmap(as.matrix(e_euc), scale = "none")
-text(-1.2, 1.2, "(b)", cex = 1.5)
+text(-1.2, 1.2, "b", cex = 1.5)
 gr_h_euc <- grab_grob()
 plot_graph(g_euc)
-text(-1, 1, "(c)", cex = 1.5)
+text(-1, 1, "c", cex = 1.5)
 gr_euc <- grab_grob()
 heatmap(as.matrix(e_scaled_euc), scale = "none")
-text(-1.2, 1.2, "(d)", cex = 1.5)
+text(-1.2, 1.2, "d", cex = 1.5)
 gr_h_scaled_euc <- grab_grob()
 plot_graph(g_scaled_euc)
-text(-1, 1, "(e)", cex = 1.5)
+text(-1, 1, "e", cex = 1.5)
 gr_scaled_euc <- grab_grob()
 heatmap(as.matrix(e_cor), scale = "none")
-text(-1.2, 1.2, "(f)", cex = 1.5)
+text(-1.2, 1.2, "f", cex = 1.5)
 gr_h_cor <- grab_grob()
 plot_graph(g_cor)
-text(-1.2, 1.3, "(g)", cex = 1.5)
+text(-1.2, 1.3, "g", cex = 1.5)
 gr_cor <- grab_grob()
 
 
